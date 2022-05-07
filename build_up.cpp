@@ -9,6 +9,11 @@
 #include <stack>
 #include <queue>
 
+
+
+
+
+
 namespace ArrayFunctions {
 	template <typename T>
 	void print_array(std::vector<T>& arr) {
@@ -53,7 +58,7 @@ namespace ArrayFunctions {
 			std::cout << "{ ";
 			std::cout << arrPair[0].first;
 			for (unsigned long long i = 1; i < arrPair.size(); ++i) {
-				std::cout <<", " << arrPair[i].first;
+				std::cout << ", " << arrPair[i].first;
 			}
 			std::cout << " }";
 		}
@@ -71,6 +76,17 @@ namespace ArrayFunctions {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
 
 template <typename T>
 class UndirectedGraph {
@@ -91,7 +107,6 @@ public:
 			std::sort(x.second.begin(), x.second.end());
 		}
 	}
-
 
 	// PRINTS
 	void print_graph () {
