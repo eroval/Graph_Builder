@@ -13,7 +13,7 @@ void dg_test() {
         { {5,8}, false },
         { {3,2}, false },
         { {3,4}, false },
-        { {8,10}, false },
+        { {10,8}, false },
     });
 
 	graph.print_graph();
