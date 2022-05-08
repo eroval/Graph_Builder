@@ -17,17 +17,17 @@ void dg_test() {
     });
 
     Graph<int> graph2(std::vector<std::pair<std::vector<int>, bool>> {
-        { {1, 3, 1}, true },
+        { {1, 3, 1}, false },
         { {1,2,1},true },
-        { {2,9,10},true },
-        { {3,4,15},true },
-        { {4,5,2},true },
-        { {1,4,1},true },
-        { {4,9,4},true },
-        { {4,9,2},true },
-        { {5,6,1},true },
-        { {6,7,3},true },
-        { {7,9,18},true }
+        { {9,2,10},false },
+        { {3,4,15},false },
+        { {5,4,2},false },
+        { {4,1,1},false},
+        { {4,9,4},false },
+        { {6,7,3},false },
+        { {6,5,1},false },
+        { {7,5,9},false },
+        { {9,7,18},false }
     });
 
 	graph.print_graph();
