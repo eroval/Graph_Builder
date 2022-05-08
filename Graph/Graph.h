@@ -42,7 +42,7 @@ private:
 	}
 
 	std::vector<T> nondijkstra_path(T root, T target) {
-		std::unordered_map<T, std::unordered_map<T,bool>> visited;
+		std::map<T, std::map<T,bool>> visited;
 		std::vector<T> nodes;
 		std::vector<std::vector<T>> arr;
 		bool set = false;
@@ -58,33 +58,41 @@ private:
 			visited[y.first][root] = true;
 		}
 
-		for (auto& x : visited) {
-			std::cout << x.first << ": ";
-			for (auto& y : x.second) {
-				std::cout << y.first << "|" << y.second << " ";
-			}
-			std::cout << "\n";
-		}
-
 		nodes.push_back(root);
 		while (!nodes.empty()) {
-			for (auto x = edges[nodes.back()].begin(); x != edges[nodes.back()].end(); x++) {
-				if (!visited[nodes.back()][x->first]) {
-					visited[nodes.back()][x->first] = true;
+			for (auto& x : visited) {
+				std::cout << x.first << ": ";
+				for (auto& y : x.second) {
+					std::cout << y.first << "|" << y.second << " ";
+				}
+				std::cout << "\n";
+			}
+			std::cout << "\n";
+			std::cout << "\n";
+
+			auto x = edges[nodes.back()].begin();
+			while (x != edges[nodes.back()].end()) {
+				std::cout << "Going over: " << nodes.back() << "\n";
+				auto& visited_node = visited[nodes.back()][x->first];
+				if (!visited_node) {
+					std::cout << "From " << nodes.back() << " to " << x->first << "\n";
+					visited_node = true;
 					if (x->first == target) {
 						set = true;
 						nodes.push_back(target);
 						arr.push_back(nodes);
-						nodes.pop_back();
 						break;
 					}
 					nodes.push_back(x->first);
 					x = this->edges[nodes.back()].begin();
+					std::cout << "Now X is = " << x->first << "\n";
+				}
+				else {
+					x++;
 				}
 			}
 			nodes.pop_back();
 		}
-
 
 		if (!set) {
 			return std::vector<int>{-1};
