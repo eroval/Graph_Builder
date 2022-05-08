@@ -3,17 +3,19 @@
 
 void dg_test() {
 	Graph<int> graph(std::vector<std::pair<std::vector<int>, bool>> {
-        { {2, 1}, true },
-        { {0, 1}, true},
-        { {4,2},false },
-        { {0,2},false },
-        { {3,4},false }
+        { {1,6}, true },
+        { {2,3}, true },
+        { {3,4}, true },
+        { {6,5}, true },
+        { {5,4}, true },
+        { {1,2}, true },
+        { {2,4}, true },
     });
 
 	graph.print_graph();
     std::cout << "\n";
 	graph.print_sorted_graph();
-
+    graph.print_shortest_path(1,4);
 }
 
 int main() {

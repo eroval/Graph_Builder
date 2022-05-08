@@ -41,13 +41,60 @@ private:
 		}
 	}
 
-	std::pair<int> nondijkstra(T root, T target) {
-		std::map<T, bool> visited;
-		std::stack<T> nodes;
-		int Sum;
+	std::vector<T> nondijkstra_path(T root, T target) {
+		std::unordered_map<T, std::unordered_map<T,bool>> visited;
+		std::vector<T> nodes;
+		std::vector<std::vector<T>> arr;
 		bool set = false;
 
+		// set bool mask map
+		for (auto& x : this->edges) {
+			for (auto& y : x.second) {
+				visited[x.first][y.first] = false;
+			}
+		}
 
+		for (auto& y : this->edges[root]) {
+			visited[y.first][root] = true;
+		}
+
+		nodes.push_back(root);
+		while (!nodes.empty()) {
+			for (auto& x : edges[nodes.back()]) {
+				std::cout << x.first << "\n";
+				//std::cout << nodes.back() << "\n";
+				if (!visited[nodes.back()][x.first]) {
+					//std::cout << "Visiting " << x.first << " from " << nodes.back() << "\n";
+					visited[nodes.back()][x.first] = true;
+					if (x.first == target) {
+						set = true;
+						nodes.push_back(target);
+						arr.push_back(nodes);
+						nodes.pop_back();
+						break;
+					}
+					nodes.push_back(x.first);
+				}
+			}
+			nodes.pop_back();
+		}
+
+
+		if (!set) {
+			return std::vector<int>{-1};
+		}
+
+		unsigned long long indexOfSmallestVector = 0;
+		unsigned long long sizeOfSmallestVector = arr[0].size();
+
+		for (unsigned long long i = 0; i < arr.size(); i++) {
+			if (arr[i].size() < sizeOfSmallestVector) {
+				indexOfSmallestVector = i;
+				sizeOfSmallestVector = arr[i].size();
+			}
+		}
+
+		return arr[indexOfSmallestVector];
 	}
 
 public:
@@ -66,14 +113,18 @@ public:
 	}
 
 	void add_directed(T x, T y, double value = 0){
-		make_weighted_if_neccessary(x, y, value);
-		edges[x][y] = value;
+		if (x != y) {
+			make_weighted_if_neccessary(x, y, value);
+			edges[x][y] = value;
+		}
 	}
 
 	void add_undirected(T x, T y, double value = 0) {
-		make_weighted_if_neccessary(x, y, value);
-		edges[x][y] = value;
-		edges[y][x] = value;
+		if (x != y) {
+			make_weighted_if_neccessary(x, y, value);
+			edges[x][y] = value;
+			edges[y][x] = value;
+		}
 	}
 
 	// PRINTS
@@ -110,30 +161,24 @@ public:
 		}
 	}
 
-	void shortest_path(T root, T target) const {
+	void print_shortest_path(T root, T target) {
+		this->check_node_existence(root);
+		this->check_node_existence(target);
+		std::vector<T> path;
+
 		if (weighted) {
 
 		}
-	}
-
-
-	/*
-	void shortest_path_unweighted(T root, T target) const{
-		GraphFunctions::check_node_existence(this->edges, root);
-		GraphFunctions::check_node_existence(this->edges, target);
-
-		std::queue<T> nodes;
-		if (this->edges.count(root) < 1) {
-			throw std::exception("No such root");
+		else {
+			path = nondijkstra_path(root, target);
 		}
-		if( this->edges.count(target))
-		nodes.push(T)
-	}
 
-	void shortest_path_weighted() const{
-		
+
+		for (unsigned long long i = 0; i < path.size(); i++) {
+			std::cout << path[i] << " ";
+		}
+		std::cout << "\n";
 	}
-	*/
 };
 
 #endif 
