@@ -182,12 +182,12 @@ public:
 	// CONSTRUCTORS
 	Graph() = delete;
 
-	Graph(std::vector<std::pair<std::vector<int>, bool>> listOfEdges) {
+	Graph(std::vector<std::pair<std::vector<T>, bool>> listOfEdges) {
 		this->add_edges(listOfEdges);
 	}
 
 
-	void add_edges(std::vector<std::pair<std::vector<int>, bool>> listOfEdges) {
+	void add_edges(std::vector<std::pair<std::vector<T>, bool>> listOfEdges) {
 		for (unsigned long long i = 0; i < listOfEdges.size(); i++) {
 			this->add_pair(listOfEdges[i].first, listOfEdges[i].second);
 		}
