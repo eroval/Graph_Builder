@@ -46,7 +46,7 @@ private:
 			return std::vector<int>{root};
 		}
 
-		std::map<T, std::map<T,bool>> visited;
+		std::unordered_map<T, std::unordered_map<T,bool>> visited;
 		std::vector<T> nodes;
 		std::vector<std::vector<T>> arr;
 		bool set = false;
@@ -100,6 +100,82 @@ private:
 		}
 
 		return arr[indexOfSmallestVector];
+	}
+
+	std::vector<T> dijkstra_path(T root, T target) {
+		if (root == target) {
+			return std::vector<int>{root};
+		}
+
+		std::unordered_map<T, bool> visited;
+		std::unordered_map<T, std::pair<T, std::pair<double, bool>>> path;
+		std::queue<T> nodes;
+
+		for (auto& x : this->edges) {
+			auto& key = x.first;
+			path[key].first = 0; // the parent of the node if possible to be reached
+			path[key].second.second = false;
+			visited[key] = false;
+		}
+
+		path[root].first = 0;
+		path[root].second.first = 0;
+		nodes.push(root);
+		
+		while (!nodes.empty()) {
+			// save root in a variable
+			auto& root = nodes.front(); 
+
+			if (!visited[root]) {
+				for (auto& x : edges[root]) {
+
+					// save each key of the roots in a variable
+					auto& key = x.first;
+					auto& cost = x.second;
+					nodes.push(key);
+
+
+
+					double sum = path[root].second.first + cost;
+					
+					if (!path[key].second.second) {
+						path[key].second.second = true;
+						path[key].first = root;
+						path[key].second.first = sum;
+					}
+					else if (path[key].second.first > sum) {
+						path[key].first = root;
+						path[key].second.first = sum;
+					}
+				}
+			}
+			visited[root] = true;
+			nodes.pop();
+		}
+
+		
+		if (!path[target].second.second) {
+			return std::vector<T> {-1};
+		}
+
+
+		/*
+		for (auto x : path) {
+			std::cout << x.first << ": [";
+			std::cout << x.second.first << "|" << x.second.second.first << "]\n";
+		}
+		*/
+
+		std::vector<T> final_path;
+		T key = target;
+		while (key != root) {
+			final_path.insert(final_path.begin(), key);
+			key = path[key].first;
+
+		}
+		final_path.insert(final_path.begin(), root);
+
+		return final_path;
 	}
 
 public:
@@ -172,7 +248,7 @@ public:
 		std::vector<T> path;
 
 		if (weighted) {
-
+			path = dijkstra_path(root, target);
 		}
 		else {
 			path = nondijkstra_path(root, target);
