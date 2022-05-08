@@ -58,22 +58,28 @@ private:
 			visited[y.first][root] = true;
 		}
 
+		for (auto& x : visited) {
+			std::cout << x.first << ": ";
+			for (auto& y : x.second) {
+				std::cout << y.first << "|" << y.second << " ";
+			}
+			std::cout << "\n";
+		}
+
 		nodes.push_back(root);
 		while (!nodes.empty()) {
-			for (auto& x : edges[nodes.back()]) {
-				std::cout << x.first << "\n";
-				//std::cout << nodes.back() << "\n";
-				if (!visited[nodes.back()][x.first]) {
-					//std::cout << "Visiting " << x.first << " from " << nodes.back() << "\n";
-					visited[nodes.back()][x.first] = true;
-					if (x.first == target) {
+			for (auto x = edges[nodes.back()].begin(); x != edges[nodes.back()].end(); x++) {
+				if (!visited[nodes.back()][x->first]) {
+					visited[nodes.back()][x->first] = true;
+					if (x->first == target) {
 						set = true;
 						nodes.push_back(target);
 						arr.push_back(nodes);
 						nodes.pop_back();
 						break;
 					}
-					nodes.push_back(x.first);
+					nodes.push_back(x->first);
+					x = this->edges[nodes.back()].begin();
 				}
 			}
 			nodes.pop_back();
