@@ -48,7 +48,8 @@ private:
 
 		std::unordered_map<T, std::unordered_map<T,bool>> visited;
 		std::vector<T> nodes;
-		std::vector<std::vector<T>> arr;
+		std::vector<T> final_path;
+		int sum = 0;
 		bool set = false;
 
 		// set bool mask map
@@ -68,11 +69,18 @@ private:
 			while (x != edges[nodes.back()].end()) {
 				auto& visited_node = visited[nodes.back()][x->first];
 				if (!visited_node) {
+					sum++;
 					visited_node = true;
 					if (x->first == target) {
 						set = true;
 						nodes.push_back(target);
-						arr.push_back(nodes);
+						if (final_path.size() == 0 || sum < final_path.size()) {
+							std::vector<T> path;
+							for (unsigned long long i = 0; i < nodes.size(); i++) {
+								path.push_back(nodes[i]);
+							}
+							final_path = path;
+						}
 						break;
 					}
 					nodes.push_back(x->first);
@@ -82,24 +90,15 @@ private:
 					x++;
 				}
 			}
+			sum--;
 			nodes.pop_back();
 		}
 
 		if (!set) {
 			return std::vector<int>{-1};
 		}
-
-		unsigned long long indexOfSmallestVector = 0;
-		unsigned long long sizeOfSmallestVector = arr[0].size();
-
-		for (unsigned long long i = 0; i < arr.size(); i++) {
-			if (arr[i].size() < sizeOfSmallestVector) {
-				indexOfSmallestVector = i;
-				sizeOfSmallestVector = arr[i].size();
-			}
-		}
-
-		return arr[indexOfSmallestVector];
+		
+		return final_path;
 	}
 
 	std::vector<T> dijkstra_path(T root, T target) {

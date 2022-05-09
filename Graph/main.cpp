@@ -61,6 +61,40 @@ void dg_test() {
         { {4,2,1},false }
     });
 
+    Graph<int> graph5(std::vector<std::pair<std::vector<int>, bool>> {
+        { {2, 1}, true },
+        { {11, 3}, true },
+        { {2, 3}, true },
+        { {2, 8}, true },
+        { {3, 4}, true },
+        { {11, 3}, true },
+        { {2, 4}, true },
+        { {11, 10}, true },
+        { {5, 1}, true },
+        { {5, 7}, true },
+        { {5, 8}, true },
+        { {8, 10}, true },
+        { {7, 8}, true },
+    });
+
+
+    Graph<int> graph6(std::vector<std::pair<std::vector<int>, bool>> {
+        { {2, 1, 10}, true },
+        { {8, 10, 1}, true },
+        { {2, 8, 5}, true },
+        { {3, 4, 2}, true },
+        { {11, 10, 20}, true },
+        { {11, 3, 20}, true },
+        { {5, 7, 1}, true },
+        { {4, 2, 1}, false },
+        { {11, 3, 20}, true },
+        { {3, 2, 5}, false },
+        { {5, 8, 2}, true },
+        { {7, 8, 3}, true },
+        { {5, 1, 1}, true },
+    });
+
+
     graph.print_shortest_path(1,3);
     std::cout << "\n";
     graph2.print_shortest_path(1,7);
@@ -68,6 +102,10 @@ void dg_test() {
     graph3.print_shortest_path(1, 7);
     std::cout << "\n";
     graph4.print_shortest_path(1,3);
+    std::cout << "\n";
+    graph5.print_shortest_path(1, 3);
+    std::cout << "\n";
+    graph6.print_shortest_path(1, 3);
 }
 
 int main() {
