@@ -4,7 +4,7 @@
 void dg_test() {
     // test 1
 	Graph<int> graph(std::vector<std::pair<std::vector<int>, bool>> {
-        { {10, 11}, true },
+        { {10, 11}, true }, 
         { {1, 2}, true },
         { {2,4}, true },
         { {7,5}, false },
@@ -46,16 +46,19 @@ void dg_test() {
         { {9,7,18},false }
     });
 
-    std::string city1 = "Stara Zagora";
-    std::string city2 = "Sofia";
-    std::string city3 = "Plovdiv";
-    std::string city4 = "Varna";
-
-    Graph<std::string> graph4(std::vector<std::pair<std::vector<std::string>, bool>> {
-        { {city1, city3, "104.43"}, false },
-        { {city2,city3,"120.23"},true},
-        { {city3,city4,"180"},false},
-        { {city1,city4,"100"},false},
+    Graph<int> graph4(std::vector<std::pair<std::vector<int>, bool>> {
+        { {1, 2, 10}, true },
+        { {2,8,5} ,true },
+        { {1,5,1},true },
+        { {5,8,2},true },
+        { {5,7,1},true },
+        { {7,8,3},true },
+        { {8,10,1},true },
+        { {10,11,20},true },
+        { {11,3,20},true },
+        { {3,4,2},true },
+        { {3,2,5},false },
+        { {4,2,1},false }
     });
 
     graph.print_shortest_path(1,3);
@@ -64,7 +67,7 @@ void dg_test() {
     std::cout << "\n";
     graph3.print_shortest_path(1, 7);
     std::cout << "\n";
-    graph4.print_shortest_path(city1, city4);
+    graph4.print_shortest_path(1,3);
 }
 
 int main() {
